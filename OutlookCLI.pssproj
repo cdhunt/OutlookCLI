@@ -32,6 +32,7 @@
     <Compile Include="OutlookCLI.psm1" />
     <Compile Include="OutlookCLI.tests.ps1" />
     <Compile Include="OutlookProvider.ps1" />
+    <Compile Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
