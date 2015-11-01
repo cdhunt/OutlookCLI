@@ -7,13 +7,11 @@ function Send-MailReply
     [CmdletBinding()]
     Param
     (
-        # Param1 help description
         [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
                    Position=1)]
         $InputObject,
 
-        # Param2 help description
         [Parameter(Mandatory=$true,
                    Position=0)]
         [string]
@@ -33,13 +31,11 @@ function Send-MailForward
     [CmdletBinding()]
     Param
     (
-        # Param1 help description
         [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
                    Position=1)]
         $InputObject,
 
-        # Param2 help description
         [Parameter(Mandatory=$true,
                    Position=0)]
         [string]
@@ -59,7 +55,6 @@ function Set-MailRead
     [CmdletBinding()]
     Param
     (
-        # Param1 help description
         [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
                    Position=1)]
@@ -69,5 +64,43 @@ function Set-MailRead
     Process
     {
         $InputObject.Unread = $false
+    }
+}
+
+function Set-MailTask
+{
+    [CmdletBinding()]
+    Param
+    (
+        # Param1 help description
+        [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   Position=1)]
+        $InputObject,
+
+		[Parameter(Position=0)]
+		[ValidateSet('Today','Tomorrow','ThisWeek','NextWeek','NoDate','Complete')]
+		[String]
+		$Interval
+
+    )
+	
+	Begin
+	{
+		$olMarkInterval = "Microsoft.Office.Interop.Outlook.OlMarkInterval" -as [type] 
+		$intervalValue = $olMarkInterval::olMarkNoDate
+		switch ($Interval)
+		{
+			'Today' {$intervalValue = $olMarkInterval::olMarkToday}
+			'Tomorrow' {$intervalValue = $olMarkInterval::olMarkTomorrow}
+			'ThisWeek' {$intervalValue = $olMarkInterval::olMarkThisWeek}
+			'NextWeek' {$intervalValue = $olMarkInterval::olMarkNextWeek}
+			'NoDate' {$intervalValue = $olMarkInterval::olMarkNoDate}
+			'Complete' {$intervalValue = $olMarkInterval::olMarkComplete}
+		}
+	}
+    Process
+    {
+        $InputObject.MarkAsTask($intervalValue)
     }
 }
