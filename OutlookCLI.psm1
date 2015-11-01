@@ -53,3 +53,21 @@ function Send-MailForward
         $newMessage.Send()
     }
 }
+
+function Set-MailRead
+{
+    [CmdletBinding()]
+    Param
+    (
+        # Param1 help description
+        [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   Position=1)]
+        $InputObject
+    )
+
+    Process
+    {
+        $InputObject.Unread = $false
+    }
+}
