@@ -2,6 +2,8 @@ Import-Module Simplex
 
 New-PSDrive mail -psprovider simplex -root "$PSScriptRoot\OutlookProvider.ps1"
 
+# https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._mailitem.aspx
+
 function Send-MailReply
 {
     [CmdletBinding()]
